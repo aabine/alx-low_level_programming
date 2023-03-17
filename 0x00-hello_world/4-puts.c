@@ -1,9 +1,9 @@
 #include <stdio.h>
 
 /**
-*This is a multi-line comment
-*that provides a detailed explanation
-*of the following code.
+* main - Entry point
+*
+* Return: Always 0 (Success)
 */
 int main(void)
 {
