@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-/*
+/**
 *This is a multi-line comment
 *that provides a detailed explanation
 *of the following code.
