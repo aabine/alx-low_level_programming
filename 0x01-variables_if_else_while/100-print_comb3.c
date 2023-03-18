@@ -8,26 +8,20 @@
 
 int main(void)
 {
-	int i, j;
+	int i;
 
-	for (i = 0; i < 10; i++)
+	for (i = 1; i < 90; i++)
 	{
-		for (j = 0; j < 10; j++)
+		putchar(i / 10 + '0');
+		putchar(i % 10 + '0');
+		if (!(i == 89))
 		{
-			if (i == 0 && j == 0)
-			{
-				continue;
-			}
-			putchar(i + '0');
-			putchar(j + '0');
-			if (!(i == 9 && j == 9))
-			{
-				putchar(',');
-				putchar(' ');
-			}
+			putchar(',');
+			putchar(' ');
 		}
-		putchar('\n');
 	}
-
+	putchar('\n');
+	
 	return (0);
+
 }
