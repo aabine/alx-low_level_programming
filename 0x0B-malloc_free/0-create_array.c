@@ -20,6 +20,10 @@ char *create_array(unsigned int size, char c)
 	}
 
 	ar = malloc(sizeof(char) * size);
+	if (ar == NULL)
+	{
+		return (NULL);
+	}
 
 	/* initialize each element of the array with the given character */
 	for (counter = 0; counter < size; counter++)
