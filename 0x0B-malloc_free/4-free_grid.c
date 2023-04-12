@@ -9,21 +9,21 @@
  */
 void free_grid(int **grid, int height)
 {
-    int i;
+	int i;
 
-    /* Check if grid is NULL or height is 0 */
-    if (grid == NULL || height == 0)
-    {
-        /* Nothing to free, return */
-        return;
-    }
+	/* Check if grid is NULL or height is 0 */
+	if (grid == NULL || height == 0)
+	{
+		/* Nothing to free, return */
+		return;
+	}
 
-    /* Free memory allocated for each row of the grid */
-    for (i = 0; i < height; i++)
-    {
-        free(grid[i]);
-    }
+	/* Free memory allocated for each row of the grid */
+	for (i = 0; i < height; i++)
+	{
+		free(grid[i]);
+	}
 
-    /* Free memory allocated for the grid itself */
-    free(grid);
+	/* Free memory allocated for the grid itself */
+	free(grid);
 }
