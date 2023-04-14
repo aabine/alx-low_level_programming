@@ -1,27 +1,21 @@
-#include "main.h"
 #include <stdlib.h>
-#include <stddef.h>
 #include <string.h>
+#include "main.h"
 
 /**
  * string_nconcat - concatenates two strings up to n bytes
- * @s1: first string
- * @s2: second string
- * @n: number of bytes from s2 to concatenate
+ * @s1: the first string
+ * @s2: the second string
+ * @n: the number of bytes from s2 to concatenate
  *
- * Return: a pointer to a newly allocated space in memory containing
- * the concatenated string, or NULL on failure
+ * Return: a pointer to the concatenated string
  */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	size_t i, j;
-	char *mal;
+	char *result;
+	unsigned int s1_len, s2_len, result_len;
 
-	if (n >= strlen(s2))
-	{
-		n = strlen(s2);
-	}
-
+	/* Treat NULL as an empty string */
 	if (s1 == NULL)
 	{
 		s1 = "";
@@ -31,22 +25,37 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 		s2 = "";
 	}
 
-	mal = malloc(strlen(s1) + n + 1);
-	if (mal == NULL)
+	s1_len = strlen(s1);
+	s2_len = strlen(s2);
+
+	/* Truncate s2 if necessary */
+	if (n >= s2_len)
 	{
-		return (NULL);
+		n = s2_len;
 	}
 
-	for (i = 0; s1[i] != '\0'; i++)
+	result_len = s1_len + n + 1; /* +1 for the null terminator */
+	result = malloc(sizeof(char) * result_len);
+	if (result == NULL)
 	{
-		mal[i] = s1[i];
+		return NULL;
 	}
 
-	for (j = 0; s2[j] != '\0' && j < n; j++)
-	{
-		mal[i + j] = s2[j];
-	}
-	mal[i + j] = '\0';
+	/* Copy s1 to the beginning of the result */
+	memcpy(result, s1, s1_len);
 
-	return (mal);
+	/* Concatenate the first n bytes of s2 after s1 */
+	if (n < s2_len)
+	{
+		memcpy(result + s1_len, s2, n);
+	}
+	else
+	{
+		memcpy(result + s1_len, s2, s2_len);
+	}
+
+	/* Add the null terminator */
+	result[result_len - 1] = '\0';
+
+	return result;
 }
