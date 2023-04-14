@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <string.h>
 #include "main.h"
 
 /**
@@ -10,52 +9,36 @@
  *
  * Return: a pointer to the concatenated string
  */
+
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *result;
-	unsigned int s1_len, s2_len, result_len;
+	char *s;
+	unsigned int i, j, slen1 = 0, slen2 = 0;
 
-	/* Treat NULL as an empty string */
-	if (s1 == NULL)
-	{
-		s1 = "";
-	}
-	if (s2 == NULL)
-	{
-		s2 = "";
-	}
+	for (i = 0; s1 && s1[i]; i++)
+		slen1++;
 
-	s1_len = strlen(s1);
-	s2_len = strlen(s2);
+	for (j = 0; s2 && s2[j]; j++)
+		slen2++;
 
-	/* Truncate s2 if necessary */
-	if (n >= s2_len)
-	{
-		n = s2_len;
-	}
-
-	result_len = s1_len + n + 1; /* +1 for the null terminator */
-	result = malloc(sizeof(char) * result_len);
-	if (result == NULL)
-	{
-		return NULL;
-	}
-
-	/* Copy s1 to the beginning of the result */
-	memcpy(result, s1, s1_len);
-
-	/* Concatenate the first n bytes of s2 after s1 */
-	if (n < s2_len)
-	{
-		memcpy(result + s1_len, s2, n);
-	}
+	if (n < slen2)
+		s = malloc(sizeof(char) * (slen1 + n + 1));
 	else
-	{
-		memcpy(result + s1_len, s2, s2_len);
-	}
+		s = malloc(sizeof(char) * (slen1 + slen2 + 1));
 
-	/* Add the null terminator */
-	result[result_len - 1] = '\0';
+	if (!s)
+		return (NULL);
 
-	return result;
+	for (i = 0; i < slen1; i++)
+		s[i] = s1[i];
+
+	for (j = 0; n < slen2 && i < (slen1 + n); j++)
+		s[i++] = s2[j];
+
+	for (j = 0; n >= slen2 && i < (slen1 + slen2); j++)
+		s[i++] = s2[j];
+
+	s[i] = '\0';
+
+	return (s);
 }
