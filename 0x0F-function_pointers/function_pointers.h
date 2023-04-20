@@ -1,3 +1,7 @@
+#ifndef FUNC_H
+#define FUNC_H
+#include <stdlib.h>
+
 int _putchar(char c);
 void print_alphabet(void);
 void print_alphabet_x10(void);
@@ -66,3 +70,4 @@ int *array_range(int min, int max);
 void print_name(char *name, void (*f)(char *));
 void print_letters(char *name);
 void print_upper(char *name);
+#endif
