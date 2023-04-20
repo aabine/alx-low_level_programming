@@ -10,7 +10,7 @@
 int main(int argc, char *argv[])
 {
 	int arg0, arg1, result;
-	char op;
+	char sign;
 	int (*calc)(int, int);
 
 	if (argc != 4)
@@ -30,9 +30,9 @@ int main(int argc, char *argv[])
 		exit(99);
 	}
 
-	op = *argv[2];
+	sign = *argv[2];
 
-	if ((op == '/' || op == '%') && arg1 == 0)
+	if ((sign == '/' || sign == '%') && arg1 == 0)
 	{
 		printf("Error\n");
 		exit(100);
