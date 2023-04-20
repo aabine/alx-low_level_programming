@@ -70,4 +70,5 @@ int *array_range(int min, int max);
 void print_name(char *name, void (*f)(char *));
 void print_letters(char *name);
 void print_upper(char *name);
+void array_iterator(int *array, size_t size, void (*action)(int));
 #endif
