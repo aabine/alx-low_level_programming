@@ -13,6 +13,7 @@ void print_all(const char * const format, ...)
 	char *s;
 	double f;
 	const char *input = format;
+	const char *sep = "";
 
 	va_start(args, format);
 
@@ -22,26 +23,27 @@ void print_all(const char * const format, ...)
 		{
 			case 'c':
 				c = va_arg(args, int);
-				printf("%c", c);
+				printf("%s%c", sep, c);
 				break;
 			case 'i':
 				i = va_arg(args, int);
-				printf("%d", i);
+				printf("%s%d", sep, i);
 				break;
 			case 'f':
 				f = va_arg(args, double);
-				printf("%f", f);
+				printf("%s%f", sep, f);
 				break;
 			case 's':
 				s = va_arg(args, char *);
-				printf("%s", s ? s : "(nil)");
+				if (s == NULL)
+					printf("%s(nil)", sep);
+				printf("%s%s", sep, s);
 				break;
 			default:
 				input++;
 				continue;
 		}
-		if (*(input + 1) != '\0')
-			printf(", ");
+		sep = ", ";
 		input++;
 	}
 	printf("\n");
