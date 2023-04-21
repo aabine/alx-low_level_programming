@@ -8,16 +8,17 @@
 void print_all(const char * const format, ...)
 {
 	va_list args;
-	int i = 0;
-	char c, *s;
+	int i;
+	char c;
+	char *s;
 	double f;
-	const char *p = format;
+	const char *input = format;
 
 	va_start(args, format);
 
-	while (format && *p)
+	while (*input != '\0')
 	{
-		switch (*p)
+		switch (*input)
 		{
 			case 'c':
 				c = va_arg(args, int);
@@ -33,18 +34,15 @@ void print_all(const char * const format, ...)
 				break;
 			case 's':
 				s = va_arg(args, char *);
-				if (s == NULL)
-					printf("(nil)");
-				else
-					printf("%s", s);
+				printf("%s", s ? s : "(nil)");
 				break;
 			default:
-				p++;
+				input++;
 				continue;
 		}
-		if (*(p + 1) != '\0')
+		if (*(input + 1) != '\0')
 			printf(", ");
-		p++;
+		input++;
 	}
 	printf("\n");
 
