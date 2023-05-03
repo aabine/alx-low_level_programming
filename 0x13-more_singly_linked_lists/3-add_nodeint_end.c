@@ -12,23 +12,27 @@ listint_t *add_nodeint_end(listint_t **head, const int n)
 	listint_t *node, *c_node;
 
 	node = malloc(sizeof(listint_t));
-	if (node == NULL) {
+	if (node == NULL)
+	{
 		return (NULL);
 	}
 	node->n = n;
 	node->next = NULL;
 
-	if (*head == NULL) {
+	if (*head == NULL)
+	{
 		*head = node;
 		return (node);
-	} else {
-		/* traverse the list to find the last node */
-		c_node = *head;
-		while (c_node->next != NULL) {
-			c_node = c_node->next;
-		}
-		/* insert the new node at the end of the list */
-		c_node->next = node;
 	}
+
+	/* traverse the list to find the last node */
+	c_node = *head;
+	while (c_node->next != NULL)
+	{
+		c_node = c_node->next;
+	}
+	/* insert the new node at the end of the list */
+	c_node->next = node;
+
 	return (node);
 }
