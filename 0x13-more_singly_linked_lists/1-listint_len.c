@@ -11,7 +11,8 @@ size_t listint_len(const listint_t *h)
 	size_t count;
 
 	/* traverse the list and count the number of nodes */
-	for (count = 0; h != NULL; count++) {
+	for (count = 0; h != NULL; count++)
+	{
 		h = h->next;
 	}
 
