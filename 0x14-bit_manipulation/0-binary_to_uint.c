@@ -18,7 +18,7 @@ unsigned int binary_to_uint(const char *b)
 		else if (b[i] == '0')
 			decimal <<= 1;
 		else
-			return (0);
+			return (NULL);
 	}
 
 	return (decimal);

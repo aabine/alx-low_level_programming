@@ -9,10 +9,8 @@
 void print_binary(unsigned long int n)
 {
 	if (n == 0)
-	{
 		putchar('0');
 		return;
-	}
 
 	if (n > 1)
 		print_binary(n >> 1);
@@ -30,7 +28,7 @@ void print_binary(unsigned long int n)
 void print_binary_numbers(unsigned long int numbers[], size_t count)
 {
 	size_t i;
-	
+
 	for (i = 0; i < count; i++)
 	{
 		print_binary(numbers[i]);
