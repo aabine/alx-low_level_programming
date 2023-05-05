@@ -19,19 +19,19 @@ void print_binary(unsigned long int n)
 		/* If bit is set, print 1 and set flag */
 		if ((n >> i) & 1)
 		{
-			putchar('1');
+			_putchar('1');
 			flag = 1;
 		}
 		/* If bit is not set and flag is set, print 0 */
 		else if (flag)
 		{
-			putchar('0');
+			_putchar('0');
 		}
 	}
 
 	/* If flag is not set, n is 0, so print 0 */
 	if (!flag)
 	{
-		putchar('0');
+		_putchar('0');
 	}
 }
