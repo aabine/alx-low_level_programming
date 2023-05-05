@@ -11,9 +11,6 @@ void print_binary(unsigned long int n)
 	int i;
 	int flag = 0;
 
-	/** Iterate over each bit in n from the most
-	 * significant bit to the least significant bit
-	 */
 	for (i = sizeof(unsigned long int) * 8 - 1; i >= 0; i--)
 	{
 		/* If bit is set, print 1 and set flag */
