@@ -1,46 +1,37 @@
 #include "main.h"
 
 /**
- * print_binary - prints the binary representation of an unsigned long int
- * @n: the unsigned long int to print
- *
+ * print_binary - Prints the binary representation of a number.
+ * @n: The number to be printed in binary.
  * Return: void
  */
-void print_binary(unsigned long int n) {
-	unsigned long int size = sizeof(n) * 8 - 1;
-	char c;
+
+void print_binary(unsigned long int n)
+{
+	int i;
 	int flag = 0;
 
-	while (size < sizeof(n) * 8) {
-		c = (n >> size) & 1;
-		if (flag == 1) {
-			putchar(c + '0');
-		} else {
-			if (c == 1) {
-				putchar(c + '0');
-				flag = 1;
-			}
-		}
-		size -= 1;
-	}
-}
-
-
-
-/**
- * print_binary_numbers - prints the binary representation of an array of unsigned long ints
- * @numbers: the array of unsigned long ints to print
- * @count: the number of elements in the array
- *
- * Return: void
- */
-void print_binary_numbers(unsigned long int numbers[], size_t count)
-{
-	size_t i;
-
-	for (i = 0; i < count; i++)
+	/** Iterate over each bit in n from the most
+	 * significant bit to the least significant bit
+	 */
+	for (i = sizeof(unsigned long int) * 8 - 1; i >= 0; i--)
 	{
-		print_binary(numbers[i]);
-		putchar('\n');
+		/* If bit is set, print 1 and set flag */
+		if ((n >> i) & 1)
+		{
+			putchar('1');
+			flag = 1;
+		}
+		/* If bit is not set and flag is set, print 0 */
+		else if (flag)
+		{
+			putchar('0');
+		}
+	}
+
+	/* If flag is not set, n is 0, so print 0 */
+	if (!flag)
+	{
+		putchar('0');
 	}
 }
