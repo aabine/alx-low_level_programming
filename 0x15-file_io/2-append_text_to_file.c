@@ -33,7 +33,7 @@ int append_text_to_file(const char *filename, char *text_content)
 		return (-1);
 
 	/* Open the file for writing. */
-	file = open(filename, O_WRONLY | O_APPEND);
+	file = open(filename, O_WRONLY | O_APPEND, 0664);
 	if (file == -1)
 	{
 		/* Try opening the file for appending if it already exists. */
