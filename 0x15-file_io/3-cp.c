@@ -1,4 +1,5 @@
 #include "main.h"
+#include <errno.h>
 
 /**
  * main - entry point
@@ -7,43 +8,60 @@
  *
  * Return: 0 on success, 97-100 on failure
  */
-int main(int argc, char *argv[])
-{
-	int fd_from, fd_to, bytes_read, status = 0;
-	char buf[1024];
+#include "main.h"
 
-	if (argc != 3)
-	{
-		fprintf(stderr, "Usage: cp file_from file_to\n");
-		return (97);
-	}
+int copy_file(char *src_file, char *dest_file);
 
-	fd_from = open(argv[1], O_RDONLY);
-	if (fd_from == -1)
-		fprintf(stderr, "Error: Can't read from file %s\n", argv[1]);
-	return (98);
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
+        fprintf(stderr, "Usage: cp file_from file_to\n");
+        return 97;
+    }
+    int status = copy_file(argv[1], argv[2]);
+    return status;
+}
 
-	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (fd_to == -1)
-		status = 99;
-	fprintf(stderr, "Error: Can't create file %s\n", argv[2]);
+/**
+ * copy_file - copies a file
+ * @src_file: source file
+ * @dest_file: destination file
+ * Return: 0 on success, 98-100 on failure
+*/
 
-	while ((bytes_read = read(fd_from, buf, 1024)) > 0)
-	{
-		if (write(fd_to, buf, bytes_read) != bytes_read)
-		{
-			status = 99;
-			fprintf(stderr, "Error: Can't write to file %s\n", argv[2]);
-		}
-	}
-
-	if (bytes_read == -1)
-		status = 98;
-	fprintf(stderr, "Error: Can't read from file %s\n", argv[1]);
-
-	if (close(fd_from) == -1 || close(fd_to) == -1)
-		status = 100;
-	fprintf(stderr, "Error: Can't close files\n");
-
-	return (status);
+int copy_file(char *src_file, char *dest_file) {
+    int src_fd = open(src_file, O_RDONLY);
+    if (src_fd < 0) {
+        fprintf(stderr, "Error: Can't read from file %s\n", src_file);
+        return 98;
+    }
+    int dest_fd = open(dest_file, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+    if (dest_fd < 0) {
+        fprintf(stderr, "Error: Can't create file %s\n", dest_file);
+        return 99;
+    }
+    char buf[4096];
+    ssize_t nread;
+    while ((nread = read(src_fd, buf, sizeof buf)) > 0) {
+        char *out_ptr = buf;
+        ssize_t nwritten;
+        do {
+            nwritten = write(dest_fd, out_ptr, nread);
+            if (nwritten >= 0) {
+                nread -= nwritten;
+                out_ptr += nwritten;
+            } else if (errno != EINTR) {
+                fprintf(stderr, "Error: Can't write to file %s\n", dest_file);
+                return 99;
+            }
+        } while (nread > 0);
+    }
+    if (nread == -1) {
+        fprintf(stderr, "Error: Can't read from file %s\n", src_file);
+        return 98;
+    }
+    if (close(src_fd) == -1 || close(dest_fd) == -1) {
+        fprintf(stderr, "Error: Can't close files\n");
+        return 100;
+    }
+    return 0;
 }
