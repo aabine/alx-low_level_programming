@@ -14,19 +14,19 @@ ssize_t read_textfile(const char *filename, size_t max_chars)
 
 	/* Check if the filename is NULL */
 	if (filename == NULL)
-		return (-1);
+		return (0);
 
 	/* Open the file for reading */
 	file = open(filename, O_RDONLY);
 	if (file == -1)
-		return (-1);
+		return (0);
 
 	/* Allocate a buffer to store the text */
 	buf = malloc(sizeof(char) * (max_chars + 1));
 	if (buf == NULL)
 	{
 		close(file);
-		return (-1);
+		return (0);
 	}
 
 	/* Read the text from the file */
@@ -35,7 +35,7 @@ ssize_t read_textfile(const char *filename, size_t max_chars)
 	{
 		free(buf);
 		close(file);
-		return (-1);
+		return (0);
 	}
 	buf[length] = '\0'; /* Null-terminate the buffer */
 
@@ -44,7 +44,7 @@ ssize_t read_textfile(const char *filename, size_t max_chars)
 	free(buf);
 	close(file);
 	if (wrote_chars != length)
-		return (-1);
+		return (0);
 
 	/* Return the number of characters read */
 	return (length);
