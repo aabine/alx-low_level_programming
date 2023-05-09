@@ -23,7 +23,7 @@ size_t custom_strlen(const char *str)
  *
  * Return: 1 on success, -1 on failure.
  */
-int append_text_to_file(const char *filename, const char *text_content)
+int append_text_to_file(const char *filename, char *text_content)
 {
 	int file, wr_stat;
 	size_t len, written;
