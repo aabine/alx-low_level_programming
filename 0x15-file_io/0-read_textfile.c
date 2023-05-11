@@ -7,55 +7,36 @@
  *
  * Return: The number of characters read, or -1 if an error occurred
  */
-ssize_t read_textfile(const char *filename, size_t max_chars)
+ssize_t read_textfile(const char *filename, size_t letters)
 {
-    int file, length, wrote_chars;
-    char *buf;
-    ssize_t ret;
+	int file_descriptor = 0;
+	ssize_t number_of_characters_read = 0;
+	char *character_buffer = 0;
 
-    /* Check if the filename is NULL */
-    if (filename == NULL)
-        return (-1);
+	file_descriptor = open(filename, O_RDWR);
+	if (file_descriptor == -1)
+	{
+		return 0;
+	}
 
-    /* Open the file for reading */
-    file = open(filename, O_RDONLY);
-    if (file == -1)
-        return (-1);
+	character_buffer = malloc(sizeof(char) * letters);
+	if (!character_buffer)
+	{
+		return 0;
+	}
 
-    /* Allocate a buffer to store the text */
-    buf = malloc(sizeof(char) * (max_chars + 1));
-    if (buf == NULL)
-    {
-        close(file);
-        return (-1);
-    }
+	number_of_characters_read = read(file_descriptor, character_buffer, letters);
+	if (number_of_characters_read == -1)
+	{
+		free(character_buffer);
+		close(file_descriptor);
+		return 0;
+	}
 
-    /* Read the text from the file */
-    ret = 0;
-    while ((length = read(file, buf + ret, max_chars - ret)) > 0)
-    {
-        ret += length;
-        if (ret == max_chars)
-            break;
-    }
+	write(STDOUT_FILENO, character_buffer, number_of_characters_read);
 
-    if (length == -1)
-    {
-        free(buf);
-        close(file);
-        return (-1);
-    }
+	free(character_buffer);
+	close(file_descriptor);
 
-    buf[ret] = '\0'; /* Null-terminate the buffer */
-
-    /* Write the text to standard output */
-    wrote_chars = write(STDOUT_FILENO, buf, ret);
-    free(buf);
-    close(file);
-
-    if (wrote_chars != ret)
-        return (-1);
-
-    /* Return the number of characters read */
-    return (ret);
+	return number_of_characters_read;
 }

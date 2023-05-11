@@ -25,36 +25,36 @@ size_t custom_strlen(const char *str)
  */
 int append_text_to_file(const char *filename, char *text_content)
 {
-    int file, wr_stat;
-    size_t len, written;
+	int file, wr_stat;
+	size_t len, written;
 
-    /* Check if the filename and text content are not NULL. */
-    if (filename == NULL || text_content == NULL)
-        return (-1);
+	/* Check if the filename and text content are not NULL. */
+	if (filename == NULL || text_content == NULL)
+		return (-1);
 
-    /* Open the file for appending. */
-    file = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0664);
-    if (file == -1)
-        return (-1);
+	/* Open the file for appending. */
+	file = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0664);
+	if (file == -1)
+		return (-1);
 
-    /* Get the length of the text content using strlen. */
-    len = custom_strlen(text_content);
+	/* Get the length of the text content using strlen. */
+	len = custom_strlen(text_content);
 
-    /* Write the text content to the file. */
-    written = 0;
-    while (written < len)
-    {
-        wr_stat = write(file, text_content + written, len - written);
-        if (wr_stat == -1)
-        {
-            close(file);
-            return (-1);
-        }
-        written += wr_stat;
-    }
+	/* Write the text content to the file. */
+	written = 0;
+	while (written < len)
+	{
+		wr_stat = write(file, text_content + written, len - written);
+		if (wr_stat == -1)
+		{
+			close(file);
+			return (-1);
+		}
+		written += wr_stat;
+	}
 
-    /* Close the file. */
-    close(file);
+	/* Close the file. */
+	close(file);
 
-    return (1);
+	return (1);
 }

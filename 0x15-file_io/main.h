@@ -12,6 +12,11 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <errno.h>
+#include <sys/sendfile.h>
+
+
+#define BUFFER_SIZE 4096
 
 struct elf_header {
 	unsigned int magic;
@@ -40,5 +45,6 @@ ssize_t read_textfile(const char *filename, size_t letters);
 int create_file(const char *filename, char *text_content);
 int append_text_to_file(const char *filename, char *text_content);
 size_t custom_strlen(const char *str);
+int copy_file(const char *src_file, const char *dest_file);
 
 #endif
