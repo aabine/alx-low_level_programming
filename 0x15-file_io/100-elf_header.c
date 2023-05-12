@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * main - check the code for Holberton School students.
+ * @argc: argument count
+ * @argv: argument vector
+ * Return: Always 0.
+ */
 int main(int argc, char *argv[])
 {
 	int fd;
@@ -60,7 +66,14 @@ int main(int argc, char *argv[])
 
 	return (0);
 }
-
+/**
+ * append_field - append field
+ * @head: ELF header
+ * @name: field name
+ * @size: field size
+ * @data: field data
+ * Return: void
+ */
 void append_field(struct elf_header_field **head, char *name, int size, unsigned char *data)
 {
 	struct elf_header_field *new_field = (struct elf_header_field *)malloc(sizeof(struct elf_header_field));
@@ -83,6 +96,11 @@ void append_field(struct elf_header_field **head, char *name, int size, unsigned
 		current->next = new_field;
 	}
 }
+/**
+ * free_fields - free fields
+ * @head: ELF header
+ * Return: void
+ */
 
 void free_fields(struct elf_header_field *head)
 {
@@ -95,6 +113,13 @@ void free_fields(struct elf_header_field *head)
 	}
 }
 
+/**
+ * read_elf_header - read ELF header
+ * @fd: file descriptor
+ * @header: ELF header
+ * Return: bool
+ */
+
 bool read_elf_header(int fd, unsigned char *header)
 {
 	if (read(fd, header, sizeof(unsigned char) * 52) != sizeof(unsigned char) * 52)
@@ -103,7 +128,11 @@ bool read_elf_header(int fd, unsigned char *header)
 	}
 	return true;
 }
-
+/**
+ * is_elf_file - check if file is an ELF file
+ * @header: ELF header
+ * Return: bool
+*/
 bool is_elf_file(unsigned char *header)
 {
 	if (header[0] == 0x7f && header[1] == 'E' && header[2] == 'L' && header[3] == 'F')
@@ -113,6 +142,12 @@ bool is_elf_file(unsigned char *header)
 	return false;
 }
 
+/**
+ * parse_elf_header - parse ELF header
+ * @fd: file descriptor
+ * @elf_header: ELF header
+ * Return: void
+ */
 void parse_elf_header(int fd, struct elf_header *elf_header)
 {
 	unsigned char header[52];
@@ -139,6 +174,12 @@ void parse_elf_header(int fd, struct elf_header *elf_header)
 	append_field(&elf_header->shnum, "Section header table entry count", 2, &header[48]);
 	append_field(&elf_header->shstrndx, "Section header string table index", 2, &header[50]);
 }
+
+/**
+ * print_elf_header - print ELF header
+ * @elf_header: ELF header
+ * Return: void
+*/
 
 void print_elf_header(struct elf_header elf_header)
 {
