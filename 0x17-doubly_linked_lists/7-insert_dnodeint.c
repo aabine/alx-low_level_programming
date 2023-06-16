@@ -3,7 +3,7 @@
 /**
  * insert_dnodeint_at_index - inserts a new node at a given
  * position in a doubly linked list
- * @head: Pointer to the head of the list
+ * @h: Pointer to the head of the list
  * @idx: Index of the node
  * @n: Integer to be added
  * Return: Pointer to the new node
@@ -37,7 +37,6 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 		*h = new_node;
 		return (new_node);
 	}
-
 	prev_node = get_dnodeint_at_index(*h, idx - 1);
 	if (prev_node == NULL)
 	{
