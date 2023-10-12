@@ -1,16 +1,14 @@
 #include "search_algos.h"
 
 /**
- * recursive_search - searches for a value in an array of
- * integers using the Binary search algorithm
- *
+ * r_search - calls to recursively search and return the index
  *
  * @array: input array
  * @size: size of the array
  * @value: value to search in
  * Return: index of the number
  */
-int recursive_search(int *array, size_t size, int value)
+int r_search(int *array, size_t size, int value)
 {
 	size_t half = size / 2;
 	size_t i;
@@ -32,16 +30,15 @@ int recursive_search(int *array, size_t size, int value)
 		return ((int)half);
 
 	if (value < array[half])
-		return (recursive_search(array, half, value));
+		return (r_search(array, half, value));
 
 	half++;
 
-	return (recursive_search(array + half, size - half, value) + half);
+	return (r_search(array + half, size - half, value) + half);
 }
 
 /**
- * binary_search - calls to binary_search to return
- * the index of the number
+ * binary_search - searches for a value in an array of integer
  *
  * @array: input array
  * @size: size of the array
@@ -52,7 +49,7 @@ int binary_search(int *array, size_t size, int value)
 {
 	int index;
 
-	index = recursive_search(array, size, value);
+	index = r_search(array, size, value);
 
 	if (index >= 0 && array[index] != value)
 		return (-1);
