@@ -5,6 +5,7 @@
  * @array: the array to search
  * @size: the size of the array
  * @value: the value to search for
+ *
  * Return: the index of the value if found, -1 otherwise
  */
 int binary_search(int *array, size_t size, int value)
