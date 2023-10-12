@@ -1,43 +1,55 @@
 #include "search_algos.h"
 
 /**
- * binary_search - searches for a value in an array of integers
- * @array: the array to search
- * @size: the size of the array
- * @value: the value to search for
+ * recursive_binary_search - searches for a value in a sorted array
+ * using the Binary search algorithm recursively
  *
- * Return: the index of the value if found, -1 otherwise
+ * @array: input array
+ * @size: size of the array
+ * @value: value to search for
+ *
+ * Return: index of the value, or -1 if not found
+ */
+int recursive_binary_search(int *array, size_t size, int value)
+{
+    size_t middle;
+    int result;
+
+    if (array == NULL || size == 0)
+        return (-1);
+
+    middle = size / 2;
+    printf("Searching in array: ");
+    for (size_t i = 0; i < size; i++)
+        printf("%s%d", (i == 0) ? "" : ", ", array[i]);
+    printf("\n");
+
+    if (value == array[middle])
+        return (middle);
+
+    if (value < array[middle])
+        return (recursive_binary_search(array, middle, value));
+
+    result = recursive_binary_search(array + middle + 1, size - middle - 1, value);
+    return (result == -1 ? -1 : result + middle + 1);
+}
+
+/**
+ * binary_search - searches for a value in a sorted array
+ * using the Binary search algorithm
+ *
+ * @array: input array
+ * @size: size of the array
+ * @value: value to search for
+ *
+ * Return: index of the value, or -1 if not found
  */
 int binary_search(int *array, size_t size, int value)
 {
-	size_t low = 0, high = size - 1, mid, i;
+    int index = recursive_binary_search(array, size, value);
 
-	while (low <= high)
-	{
-		printf("Searching in array: ");
-		for (i = low; i <= high; i++)
-		{
-			printf("%d", array[i]);
-			if (i < high)
-				printf(", ");
-		}
-		printf("\n");
+    if (index == -1 || array[index] != value)
+        return (-1);
 
-		mid = (low + high) >> 1;
-		if (array[mid] == value)
-		{
-			while (mid > 0 && array[mid - 1] == value)
-				mid--;
-			return mid;
-		}
-		else if (array[mid] < value)
-		{
-			low = mid + 1;
-		}
-		else
-		{
-			high = mid - 1;
-		}
-	}
-	return -1;
+    return (index);
 }
