@@ -16,10 +16,17 @@ int binary_search_recursive(int *array, int left_index, int right_index, int val
 	if (right_index >= left_index)
 	{
 		int mid_index = left_index + (right_index - left_index) / 2;
+		int i;
 
 		printf("Searching in array: ");
-		for (int i = left_index; i <= right_index; i++)
-			printf("%d%s", array[i], (i == right_index) ? "\n" : ", ");
+		for (i = left_index; i <= right_index; i++)
+		{
+			printf("%d", array[i]);
+			if (i == right_index)
+				printf("\n");
+			else
+				printf(", ");
+		}
 
 		if (array[mid_index] == value)
 			return mid_index;
