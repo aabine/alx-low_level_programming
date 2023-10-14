@@ -14,7 +14,7 @@ int jump_search(int *array, size_t size, int value)
 	int blockSize, prev, step;
 
 	if (array == NULL || size == 0)
-		return -1;
+		return (-1);
 
 	blockSize = (int)sqrt((double)size);
 	step = prev = 0;
@@ -25,7 +25,7 @@ int jump_search(int *array, size_t size, int value)
 		printf("Value checked array[%d] = [%d]\n", step, array[step]);
 
 		if (array[step] == value)
-			return step;
+			return (step);
 
 		prev = step;
 		step += blockSize;
@@ -39,12 +39,12 @@ int jump_search(int *array, size_t size, int value)
 		printf("Value checked array[%d] = [%d]\n", prev, array[prev]);
 
 		if (array[prev] == value)
-			return prev;
+			return (prev);
 
 		/* Terminate the loop if the target value is exceeded */
 		if (array[prev] > value)
 			break;
 	}
 
-	return -1;
+	return (-1);
 }
