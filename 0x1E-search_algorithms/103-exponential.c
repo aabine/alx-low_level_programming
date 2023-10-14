@@ -5,39 +5,39 @@
  * binary_search_recursive - searches for a value in a sorted array of integers
  * using the binary search algorithm (recursive approach)
  * @array: the array to search
- * @left_index: the left index of the array
- * @right_index: the right index of the array
+ * @l_index: the left index of the array
+ * @r_index: the right index of the array
  * @value: the value to search for
  *
  * Return: the index of the value if found, -1 otherwise
  */
-int binary_search_recursive(int *array, int left_index, int right_index, int value)
+int binary_search_recursive(int *array, int l_index, int r_index, int value)
 {
-	if (right_index >= left_index)
+	if (r_index >= l_index)
 	{
-		int mid_index = left_index + (right_index - left_index) / 2;
+		int mid_index = l_index + (r_index - l_index) / 2;
 		int i;
 
 		printf("Searching in array: ");
-		for (i = left_index; i <= right_index; i++)
+		for (i = l_index; i <= r_index; i++)
 		{
 			printf("%d", array[i]);
-			if (i == right_index)
+			if (i == r_index)
 				printf("\n");
 			else
 				printf(", ");
 		}
 
 		if (array[mid_index] == value)
-			return mid_index;
+			return (mid_index);
 
 		if (array[mid_index] > value)
-			return binary_search_recursive(array, left_index, mid_index - 1, value);
+			return (binary_search_recursive(array, l_index, mid_index - 1, value));
 
-		return binary_search_recursive(array, mid_index + 1, right_index, value);
+		return (binary_search_recursive(array, mid_index + 1, r_index, value));
 	}
 
-	return -1;
+	return (-1);
 }
 
 /**
@@ -52,21 +52,23 @@ int binary_search_recursive(int *array, int left_index, int right_index, int val
 int exponential_search(int *array, size_t size, int value)
 {
 	if (array == NULL)
-		return -1;
+		return (-1);
 
 	if (array[0] == value)
-		return 0;
+		return (0);
 
 	int index = 1;
+
 	while (index < size && array[index] <= value)
 	{
 		printf("Value checked array[%d] = [%d]\n", index, array[index]);
 		index *= 2;
 	}
 
-	int left_index = index / 2;
-	int right_index = (index < size) ? index : size - 1;
-	printf("Value found between indexes [%d] and [%d]\n", left_index, right_index);
+	int l_index = index / 2;
+	int r_index = (index < size) ? index : size - 1;
 
-	return binary_search_recursive(array, left_index, right_index, value);
+	printf("Value found between indexes [%d] and [%d]\n", l_index, r_index);
+
+	return (binary_search_recursive(array, l_index, r_index, value));
 }
